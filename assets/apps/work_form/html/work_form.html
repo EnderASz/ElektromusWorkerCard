@@ -10,9 +10,7 @@
     {% endcompress %}
 </head>
 <body>
-    <header id="Company">
-        <h1>ELEKTROMUS</h1>
-    </header>
+    {% include 'apps/global/html/global_main_header.html' %}
     <main class="container">
         {% include 'apps/global/html/global_main_header.html' %}
         <form
@@ -21,7 +19,7 @@
             action="{% url action.url %}"
             method="post">
                 {% csrf_token %}
-                <input type=hidden id="action" name="action" value="{{action}}">            
+                <input type=hidden id="action" name="action" value="{{action.name}}">            
                 {% if action.name == "add_work_time" %}
                     <ul>
                         <li>
