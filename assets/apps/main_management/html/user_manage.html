@@ -1,0 +1,66 @@
+{% load static %}
+<script src="{% static 'apps/main_management/js/user_manage/functions.js' %}"></script>
+<section id="manage-user">
+    <h5>{% if active == "manage_user" %}Modyfikowany użytkownik: {{user.user_info.username}}{% endif %}</h5>
+    <form name="user_data_form" class="data-form" action="{% url 'back:users:update_user' %}" method="post">
+        {% csrf_token %}
+        <ul>
+            <li>
+                <label>ID użytkownika:</label>
+                <input
+                    type=number
+                    name="id"
+                    {% if user.user_info.id %}
+                        value="{{user.user_info.id}}"
+                    {% else %}
+                        placeholder='Przydział automatyczny'
+                    {% endif %}
+                    readonly>
+            </li>
+            <li>
+                <label>Nazwa użytkownika:</label>
+                <input type=text name="username" placeholder="Nazwa użytkownika" value="{{user.user_info.username}}">
+            </li>
+            {% if active == "add_user" %}
+            <li>
+                <label>Hasło:</label>
+                <input
+                    name="password"
+                    placeholder="Hasło"
+                    type=password>
+            </li>
+            {% endif %}
+            <li>
+                <label>Pracownik:</label>
+                <input type=checkbox name="is_worker" {% if user.worker %}checked{% endif %}>
+                <ul id="worker-data" {% if not user.worker %}class="read-only"{% endif %}>
+                    <li class='currency'>
+                        <label>Stawka godzinowa:</label>
+                        <span>PLN</span
+                        ><input
+                            type=number
+                            name="rate"
+                            placeholder="00.00"
+                            min="0.01"
+                            step="0.01"
+                            value={% if user.worker %}{{user.worker.rate_per_hour}}{% else %}"11.00"{% endif %}
+                            {% if not user.worker %}readonly{% endif %}>
+                    </li>
+                </ul>
+            </li>
+            <li {% if not logged_user.is_superuser %}class="read-only"{% endif %}>
+                <label>Administrator:</label>
+                <input
+                    type=checkbox
+                    name="is_admin"
+                    onclick="checkboxReadOnlyChecked(this)"
+                    {% if user.user_info.is_staff %}checked{% endif %}
+                    {% if not logged_user.is_superuser %}readonly{% endif %}>
+            </li>
+        </ul>       
+        <footer class="small">
+            <input type=submit id="save" value="Zapisz">
+        </footer>
+    </form>
+</section>
+<script src="{% static 'apps/main_management/js/user_manage/events.js' %}"></script>

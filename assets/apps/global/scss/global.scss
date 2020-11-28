@@ -1,0 +1,277 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:after, *:before {
+    box-sizing: inherit;
+}
+
+body {
+    background-image: linear-gradient(
+        to bottom right,
+        rgba(196, 102, 0, 0.6),
+        rgba(155, 89, 182, 0.6)
+    );
+    height: 100%;
+}
+
+body > header {
+    width: 100%;
+    text-align: center;
+    padding: 3em 0 2em 0;
+}
+
+h1 {
+    margin: 0;
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 4em;
+}
+
+#error-box {
+    &.invisible {
+        display: none;
+    }
+    &.form {
+        background-color: #bd4545;
+        & > h5 {
+            font-size: 1em;
+        }
+    }
+    text-align: left;
+    background-color: #13a4c594;
+    padding: 0.1em 0.5em 0.5em 0.5em;
+    border-radius: 1em;
+    margin-bottom: 0.5em;
+    font-family: Helvetica;
+    color: white;
+    & > h5 {
+        font-size: 1.1em;
+        margin: 0;
+        margin-top: 1em;
+    }
+    & > p {
+        margin: 0.5em;
+        margin-left: 1em;
+    }
+}
+
+.container {
+    margin: auto;
+}
+
+main {
+    padding: 1em;
+    padding-bottom: 0;
+    border-radius: 3em;
+
+    background-color: white;
+    text-align: center
+}
+
+h3, h4, h5 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 0.3em;
+}
+
+h4, h5 {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 0.3em;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#logout-bt {
+    display: block;
+    background-color: #bd5252;
+    border-style: none;
+    border-radius: 20px;
+    margin: 0.2em auto 0 auto;
+
+    padding: 0.5em 0.7em;
+    width: 8em;
+    font-size: 0.97em;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Arial;
+}
+
+#logout-bt:hover{
+    background-color: #a02727;
+}
+
+#logout-bt:focus{
+    border-style: inset;
+    border-width: 2px;
+    border-color: #bd5252;
+}
+
+form {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+input.confirm, input[name="submitBt"], input#save {
+    background-color: #21a237;
+    border-style: none;
+    border-radius: 15px;
+
+    color: white;
+    font-weight: bold;
+}
+
+input.confirm:hover, input[name="submitBt"]:hover, input#save:hover {
+    background-color: #1c882e;
+}
+
+input.confirm:focus, input[name="submitBt"]:focus, input#save:focus {
+    border-style: inset;
+    border-width: 2px;
+    border-color: #21a237;
+    outline: 0;
+}
+
+form.data-form {
+    &.centered {
+        text-align: center;
+        ul {
+            li {
+                margin-bottom: 0.5em;
+                label {
+                    text-align: center;
+                    line-height: 1.1em;
+                    height: auto;
+                    width: 100%;
+                }
+                input {
+                    &:not([type=checkbox]) {
+                        margin: 0.3em;
+                    }
+                }
+                &:not(.currency) input {
+                    text-align: center;
+                }
+                &:first-child:last-child > input {
+                    font-size: 1.25em;
+                }
+            }
+        }
+    }
+    #error {
+        margin: auto;
+        width: 75%;
+        background-color: red;
+    }
+    width: 100%;
+    text-align: left;
+    font-family: Arial;
+    box-sizing: content-box;
+    margin-top: 0;
+    ul {
+        box-sizing: border-box;
+        .read-only, input:read-only{
+            opacity: 0.4;
+        }
+        label {
+            display: inline-block;
+            margin-right: 1%;
+            font-size: 1.1em;
+            height: 2em;
+            line-height: 2em;
+            text-align: right;
+            width: 40%;
+        }
+        input {
+            outline: 0;
+            &:not([type=checkbox]) {
+                font-size: 1em;
+                border: 1px solid #a5a5a5;
+                border-radius: 0.5em;
+                height: 2em;
+                padding: 0.3em;
+                &[name="id"]{
+                    display: inline-block;
+                }
+            }
+            &[type=button]{
+                display: inline-block;
+            }
+            &[type=checkbox] {
+                margin-left: 0;
+            }
+            &[type=date]:read-only, &[type=datetime-local]:read-only, &[type=time] {
+                &::-webkit-inner-spin-button, &::-webkit-calendar-picker-indicator {
+                    -webkit-appearance: none;
+                    display: none;
+                }
+            }
+            &[name="id"] {
+                width: 5em;
+                &:placeholder-shown {
+                    width: 12em;
+                }
+            }
+        }
+        li.currency {
+            label {
+                position: relative;
+                bottom: 2px;
+            }
+            span {
+                text-align: right;
+                display: inline-block;
+                border: 1px solid #a5a5a5;
+                border-radius: 0.5em 0 0 0.5em;
+                height: 2em;
+                width: 3em;
+                padding: 0.3em;
+                line-height: 1.5em;
+                font-weight: bold;
+                background-color: #d2d2d2;
+            }
+            input {
+                width: 4.2em;
+                height: 2em;
+                padding: 0.3em;
+                border: 1px solid #a5a5a5;
+                border-radius: 0 0.5em 0.5em 0;
+                border-left: 0;
+                position: relative;
+                bottom: 2px;
+            }
+        }
+    }
+    & > footer {
+        box-sizing: border-box;
+        width: 100%;
+        text-align: center;
+        &.small {
+            height: 2.8em;
+            text-align: right;
+            position: relative;
+            #save, [name="save"] {
+                margin-left: 1em;
+                margin-right: 1.5px;
+            
+                border-style: none;
+                border-radius: 10px;
+            
+                font-size: 1.1em;
+                height: 100%;
+                width: 15%;
+                min-width: 4em;
+                max-width: 6.5em;
+            }
+        }
+    }
+}

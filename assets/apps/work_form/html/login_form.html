@@ -1,0 +1,47 @@
+{% load static %}
+{% load compress %}
+<head>
+    {% include 'apps/global/html/global_head.html' %}
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    {% compress css %}
+        <link
+            rel=stylesheet
+            type='text/x-scss'
+            href="{% static 'apps/work_form/scss/app_global.scss' %}">
+        <link
+            rel=stylesheet
+            type='text/x-scss'
+            href="{% static 'apps/work_form/scss/work_form.scss' %}">
+    {% endcompress %}
+</head>
+<body>
+    <header>
+        <h1>ELEKTROMUS</h1>
+    </header>
+    <section id="error-box" class="container {% if not error%}invisible{% endif %}">
+        <h5>
+            {% if error.name == 'INVALID_VALUE_PASSWORD_ERROR' %}
+            Nieprawidłowy kod identyfikacyjny!
+            {% elif error.name == 'INVALID_VALUE_USERNAME_ERROR' %}
+            Nieprawidłowa nazwa pracownika!
+            {% elif error.name == 'WORKER_WORKED_TODAY_ALREADY_ERROR'%}
+            Pracownik już dziś pracował!
+            {% elif error.name == 'NOT_LOGGED_ERROR' %}
+            Pracownik nie jest zalogowany!
+            {% elif error.name == 'NOT_PERSONEL_ERROR' %}
+            Błąd konfiguracji konta!
+            {% endif %}
+        </h5>
+        <p>{{error.description}}</p>
+    </section>
+    <main class="container">
+        {% include 'apps/global/html/global_main_header.html' %}
+        <form action="{% url 'back:auth:login' %}" method="post">
+            {% csrf_token %}
+            <input name='username' placeholder="Nazwa pracownika" type="text" value={{default_username}}>
+            <input name='password' placeholder="Kod identyfikacyjny" type="password">
+            <input type=submit id="submit-bt" class="confirm large" value="Dalej">
+        </form>
+    </main>
+</body>

@@ -1,0 +1,78 @@
+{% load static %}
+{% load compress %}
+<head>
+    {% include 'apps/global/html/global_head.html' %}
+    {% compress css %}
+        <link
+            rel=stylesheet
+            type='text/x-scss'
+            href="{% static 'apps/work_form/scss/app_global.scss' %}">
+    {% endcompress %}
+</head>
+<body>
+    <header id="Company">
+        <h1>ELEKTROMUS</h1>
+    </header>
+    <main class="container">
+        {% include 'apps/global/html/global_main_header.html' %}
+        <form
+            name="confirmForm"
+            class="data-form centered"
+            action="{% url action.url %}"
+            method="post">
+                {% csrf_token %}
+                <input type=hidden id="action" name="action" value="{{action}}">            
+                {% if action.name == "add_work_time" %}
+                    <ul>
+                        <li>
+                            <label>Czas rozpoczęcia pracy:</label><br>
+                            <input type=datetime-local id='work-start' value="{{work.start}}" readonly>
+                        </li>
+                        <li>
+                            <label>Czas zakończenia pracy:</label><br>
+                            <input type=datetime-local id='work-finish' value="{{work.finish}}" readonly>
+                        </li>
+                        <li>
+                            <label>Miejsce pracy:</label></br>
+                            <input type=text id='work-location' value="{{work.location}}" readonly>
+                        </li>
+                        <li>
+                            <label>Obecny dodatkowy czas pracy:</label></br>
+                            <input type=time id='work-current-additional-time' value="{{work.additional_time}}" readonly>
+                        </li>
+                        <li>
+                            <label>Dodawany czas pracy:</label></br>
+                            <input type=time id='work-additional-time' name='work_additional_time' value="01:00">
+                        </li>
+                    </ul>
+                    <footer>
+                        <input type=button id="submit-bt" name="confirmBt" class="confirm large" value="Dodaj czas pracy">
+                    </footer>
+                {% elif action.name == "start_work" %}
+                    <ul>
+                        <li>
+                            <input type=text name="location" placeholder="lokalizacja pracy" maxlength="40">
+                        </li>
+                    </ul>
+                    <footer>
+                        <input type=button id="submit-bt" name="confirmBt" class="confirm large" value="Rozpocznij pracę">
+                    </footer>
+                {% else %}
+                    <ul>
+                        <li>
+                            <label>Czas rozpoczęcia pracy:</label><br>
+                            <input type=datetime-local id='work-start' value="{{work.start}}" readonly>
+                        </li>
+                        <li>
+                            <label>Miejsce pracy:</label></br>
+                            <input type=text id='work-location' value="{{work.location}}" readonly>
+                        </li>
+                    </ul>
+                    <footer>
+                        <input type=button id="submit-bt" name="confirmBt" class="confirm large" value="Zakończ pracę">
+                    </footer>
+                {% endif %}
+        </form>
+    </main>
+    <script type="text/javascript" src="{% static 'apps/work_form/js/confirm.js' %}"></script>
+</body>

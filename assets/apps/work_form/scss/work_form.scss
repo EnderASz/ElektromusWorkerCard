@@ -1,0 +1,9 @@
+form > input[type=text], form > input[type=password] {
+    padding: 0.8em;
+    width: 16em;
+    height: 3em;
+    font-size: 1.3em;
+
+    border-radius: 10px;
+    border: 1.5px solid rgba(0, 0, 0, 0.3);
+}

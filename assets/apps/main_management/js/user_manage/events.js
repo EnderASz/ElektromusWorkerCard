@@ -1,0 +1,1 @@
+document.user_data_form.is_worker.addEventListener('change', isWorkerChanged);

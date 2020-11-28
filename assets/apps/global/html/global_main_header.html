@@ -1,0 +1,7 @@
+<header>
+    <h3>{{title}}</h3>
+    {% if logged_user %}
+        <h4>Użytkownik: {{logged_user.username}}</h4>
+        <a id="logout-bt" href="{% url 'back:auth:logout' %}">Wyloguj</a>
+    {% endif %}
+</header>

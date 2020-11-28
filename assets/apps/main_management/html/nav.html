@@ -1,0 +1,10 @@
+<nav>
+    <ul>
+        <li{% if active == 'user_list' %} class="active"{% endif %}>
+            <a href="{% url 'front:cs_admin:user_list' %}">Lista użytkowników</a>
+        </li>
+        <li{% if active == 'add_user' %} class="active"{% endif %}>
+            <a href="{% url 'front:cs_admin:add_user' %}">Dodaj użytkownika</a>
+        </li>
+    </ul>
+</nav>

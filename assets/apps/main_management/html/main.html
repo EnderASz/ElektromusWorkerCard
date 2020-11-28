@@ -1,0 +1,29 @@
+{% load static %}
+{% load compress %}
+<head>
+    {% include 'apps/global/html/global_head.html' %}
+    {% compress css %}
+        <link
+            rel=stylesheet
+            type='text/x-scss'
+            href="{% static 'apps/main_management/scss/app_global.scss' %}">
+    {% endcompress %}
+</head>
+<body>
+    <header>
+        <h1>ELEKTROMUS</h1>
+    </header>
+    <main class="container {% if active == "add_user" or active == "manage_user" or active == "change_password" %}narrow{% endif %}">
+        {% include 'apps/global/html/global_main_header.html' %}
+        {% include 'apps/main_management/html/nav.html' %}
+        {% if active == 'user_list'%}
+            {% include 'apps/main_management/html/user_list.html'%}
+        {% elif active == 'add_user' or active == 'manage_user'%}
+            {% include 'apps/main_management/html/user_manage.html'%}
+        {% endif %}
+        {% if active == 'change_password' %}
+            {% include 'apps/main_management/html/change_password.html'%}
+        {% endif %}
+    </main>
+    {% include 'apps/global/html/global_body_end.html' %}
+</body>

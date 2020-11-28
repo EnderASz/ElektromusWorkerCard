@@ -1,0 +1,122 @@
+{% load static %}
+<script src="{% static 'apps/main_management/js/user_list/functions.js' %}"></script>
+<section id="user-list">
+    <form action="{% url 'back:users:group_action' %}" name="user_list_form" method="POST">
+        {% csrf_token %}
+        <div id="action-selection">
+            <label>Akcja:</label>
+            <select name="action">
+                <option value="None">
+                    ---------------------------
+                </option>
+                <option value="delete">
+                    Usuń wybranych użytkowników
+                </option>
+            </select>
+            <input type=submit value="Wykonaj">
+        </div>
+        <table>
+            <thead>
+                <tr class="head-row">
+                    <th class="checkbox-column">
+                        <input type=checkbox name="all_users_selection">
+                    </th>
+                    <th class="username-column">
+                        Nazwa użytkownika
+                    </th>
+                    <th class="worker-state-column">
+                        Stan
+                    </th>
+                    <th class="user-type-column">
+                        Typ
+                    </th>
+                    <th class="actions-column">
+                        Akcje
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr class="data-row">
+                        <td class="checkbox-column">
+                            <input class="user-selection" type=checkbox name="user_selection" value={{user.user_info.id}} onclick="updateCheckAllCheckbox(this);">
+                        </td>
+                        <td class="username-column">
+                            {{user.user_info.username}}
+                        </td>
+                        <td class="worker-state-column">
+                            {% if user.working == None %}
+                                N/A
+                            {% elif user.working %}
+                                Pracuje
+                            {% else %}
+                                Nie Pracuje
+                            {% endif %}
+                        </td>
+                        <td class="user-type-column">
+                            {% spaceless %}
+                                {% if user.working != None %}
+                                    <span class="type-symbol worker" title="Pracownik">W</span>
+                                {% endif %}
+                                {% if user.user_info.is_staff %}
+                                    <span class="type-symbol staff" title="Administrator">A</span>
+                                {% endif %}
+                                {% if user.user_info.is_superuser %}
+                                    <span class="type-symbol superuser" title="Super użytkownik">S</span>
+                                {% endif %}
+                                {% if user.working == None and not user.user_info.is_staff and not user.user_info.is_superuser %}
+                                    <span class="type-symbol user" title="Podstawowy użytkownik">U</span>
+                                {% endif %}
+                            {% endspaceless %}
+                        </td>
+                        <td class="actions-column">
+                            <input
+                                class="manage_bt"
+                                type="button"
+                                value="Zarządaj"
+                                onclick="runAction(
+                                    'manage',
+                                    '{% url 'front:cs_admin:manage_user' pk=user.user_info.id %}',
+                                    '{{user.user_info.username}}',
+                                    '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
+                            <input
+                                class="delete_bt"
+                                type="button"
+                                value="Usuń"
+                                onclick="runAction(
+                                    'delete',
+                                    '{% url 'back:users:delete_user_view' pk=user.user_info.id %}',
+                                    '{{user.user_info.username}}',
+                                    '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
+                            <input
+                                class="change_password_bt"
+                                type="button"
+                                value="Zmień Hasło"
+                                onclick="runAction(
+                                    'change_password',
+                                    '{% url 'front:cs_admin:change_password' pk=user.user_info.id %}',
+                                    '{{user.user_info.username}}',
+                                    '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</section>
+<aside id="time-work-overview">
+    <h5>Generuj zestawienie czasu pracy</h5>
+    <form name="download_overview_form" action="{% url 'back:users:overview_download_view' %}" method="post">
+        {% csrf_token %}
+        <section class="data-input">
+            <label>Od dnia</label>
+            <input type=date name="date_from">
+            <label>Do dnia</label>
+            <input type=date name="date_to">
+        </section>
+        <input type=hidden name="users" value="">
+        <input type=button name="submitBt" value="Wygeneruj i pobierz">
+    </form>
+</aside>
+<script src="{% static 'apps/main_management/js/user_list/events.js' %}"></script>
+<script src="{% static 'apps/main_management/js/user_list/defaults.js' %}"></script>

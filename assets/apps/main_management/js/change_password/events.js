@@ -1,0 +1,1 @@
+document.new_password_form.save.addEventListener('click', validateForm);
