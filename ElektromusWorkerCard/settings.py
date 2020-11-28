@@ -71,7 +71,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'EWC.urls'
+ROOT_URLCONF = 'ElektromusWorkerCard.urls'
 
 TEMPLATES = [
     {
@@ -91,7 +91,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'EWC.wsgi.application'
+WSGI_APPLICATION = 'ElektromusWorkerCard.wsgi.application'
 
 
 # Database
