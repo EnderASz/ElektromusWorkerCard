@@ -359,7 +359,7 @@ def get_xlsx(users, start_date, end_date):
                     work_time_minutes += (work_end.timestamp - work_start.timestamp).seconds//60
                 else:
                     time_to = "--:--"
-                    work_time_minutes += (timezone.now() - work_start.timestamp).seconds//60
+                    work_time_minutes += (timezone.now()+timezone.timedelta(hours=1) - work_start.timestamp).seconds//60
             else:
                 localization = "N/A"
                 time_from, time_to = "--:--", "--:--"
