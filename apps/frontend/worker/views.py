@@ -28,7 +28,7 @@ def start_work_panel(request):
                     'name': 'start_work',
                     'url': 'back:users:start_work'
                 },
-                'logged_username': request.user.username
+                'logged_user': request.user.username
             })
     return AuthError.not_logged(request)
 
@@ -56,7 +56,7 @@ def finish_work_panel(request):
                     'start': today_work[0].timestamp.strftime("%Y-%m-%dT%H:%M"),
                     'location': today_work[0].location
                 },
-                'logged_username': request.user.username
+                'logged_user': request.user.username
             })
     return AuthError.not_logged(request)
 
@@ -90,7 +90,7 @@ def add_work_time_panel(request):
                         'location': today_work[0].location,
                         'additional_time': f'{str(additional_time//60).zfill(2)}:{str(additional_time%60).zfill(2)}'
                     },
-                    'logged_username': request.user.username
+                    'logged_user': request.user.username
                 })
         return redirect(worker_routes['start_work_panel'])
     return AuthError.not_logged(request)
