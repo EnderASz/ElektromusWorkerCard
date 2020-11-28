@@ -1,8 +1,7 @@
 from datetime import date
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-
-import datetime
+from django.utils import timezone
 
 from apps.backend.users.models import Worker, AdditionalWorkTime
 from apps.frontend.router.routes import worker_routes
@@ -18,7 +17,7 @@ def start_work_panel(request):
             return AuthError.not_personel(request)
         if worker.working:
             return redirect(worker_routes['finish_work_panel'])
-        if funcs.worked(worker, datetime.date.today()):
+        if funcs.worked(worker, timezone.localdate()):
             return redirect(worker_routes['add_work_time_panel'])
         return render(
             request,
@@ -39,7 +38,7 @@ def finish_work_panel(request):
         worker = Worker.objects.filter(user = request.user).first()
         if not worker:
             return AuthError.not_personel(request)
-        today_work = funcs.get_work(worker, datetime.date.today())
+        today_work = funcs.get_work(worker, timezone.localdate())
         if not worker.working:
             if not today_work[0]:
                 return redirect(worker_routes['start_work_panel'])
@@ -69,11 +68,11 @@ def add_work_time_panel(request):
             return AuthError.not_personel(request)
         if worker.working:
             return redirect(worker_routes['finish_work_panel'])
-        today_work = funcs.get_work(worker, datetime.date.today())
+        today_work = funcs.get_work(worker, timezone.localdate())
         if today_work and today_work[0]:
             additional_time = AdditionalWorkTime.objects.filter(
                 user=request.user,
-                date=datetime.date.today()
+                date=timezone.localdate()
                 ).first()
             additional_time = additional_time.time_minutes if additional_time else 0
             return render(

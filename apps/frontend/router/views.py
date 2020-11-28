@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.core.exceptions import PermissionDenied
-
-import datetime
+from django.utils import timezone
 
 from apps.backend.users.models import Worker, WorkTimestamp 
 from apps.utils.errors import AuthError
@@ -29,7 +28,7 @@ def worker_router_view(request):
                 if not WorkTimestamp.objects.filter(
                         user=request.user,
                         working_after=True,
-                        timestamp__date=datetime.date.today()
+                        timestamp__date=timezone.localdate()
                     ).exists():
                     return redirect(worker_routes['start_work_panel'])
                 return redirect(worker_routes['add_work_time_panel'])

@@ -1,12 +1,12 @@
-import datetime
 import xlsxwriter
 import io
 from decimal import Decimal
 
 from .models import WorkTimestamp, Worker, AdditionalWorkTime
 from django.contrib.auth.models import User
+from django.utils import timezone
 
-def add_work_time(worker: Worker, minutes: int, date=datetime.date.today()):
+def add_work_time(worker: Worker, minutes: int, date=timezone.localdate()):
     current = AdditionalWorkTime.objects.filter(
         user=worker.user,
         date=date
@@ -85,7 +85,7 @@ def update_user(auth_user, user_new_info):
 
 def date_range(start, end, end_included=False):
     for day_index in range(int((end - start).days) + end_included):
-        yield start + datetime.timedelta(day_index)
+        yield start + timezone.timedelta(day_index)
 
 def get_xlsx(users, start_date, end_date):
     output = io.BytesIO()
@@ -359,7 +359,7 @@ def get_xlsx(users, start_date, end_date):
                     work_time_minutes += (work_end.timestamp - work_start.timestamp).seconds//60
                 else:
                     time_to = "--:--"
-                    work_time_minutes += (datetime.datetime.now() - work_start.timestamp).seconds//60
+                    work_time_minutes += (timezone.now() - work_start.timestamp).seconds//60
             else:
                 localization = "N/A"
                 time_from, time_to = "--:--", "--:--"

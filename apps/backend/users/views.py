@@ -3,11 +3,13 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbid
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.core.exceptions import PermissionDenied
+from django.utils import timezone
 
 from apps.frontend.router.routes import router_routes
 
 from .models import Worker, WorkTimestamp, AdditionalWorkTime
 from . import functions as funcs
+
 import datetime
 
 
@@ -19,7 +21,7 @@ def start_work_view(request):
                 worked_today = WorkTimestamp.objects.filter(
                     user=request.user,
                     working_after=True,
-                    timestamp__date=datetime.date.today()
+                    timestamp__date=timezone.localdate()
                     ).exists()
                 if not (worker.working or worked_today):
                     worker.working = True
@@ -65,7 +67,7 @@ def add_work_time_view(request):
                 worked_today = WorkTimestamp.objects.filter(
                     user=request.user,
                     working_after=True,
-                    timestamp__date=datetime.date.today()
+                    timestamp__date=timezone.localdate()
                     ).exists()
                 if not worker.working and worked_today:
                     time = request.POST.get('work_additional_time').split(':')
@@ -119,6 +121,8 @@ def overview_download_view(request):
     if request.method == 'POST' and request.user.is_authenticated:
         from_date = datetime.datetime.strptime(request.POST.get('date_from'), '%Y-%m-%d')
         to_date = datetime.datetime.strptime(request.POST.get('date_to'), '%Y-%m-%d')
+        from_date = timezone.localtime(from_date)
+        to_date = timezone.localtime(to_date)
         str_from_date = from_date.strftime("%d-%m-%Y")
         str_to_date = to_date.strftime("%d-%m-%Y")
         filename = f"{str_from_date} - {str_to_date}.xlsx"
