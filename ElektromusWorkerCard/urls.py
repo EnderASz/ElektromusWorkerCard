@@ -24,4 +24,6 @@ urlpatterns = [
     #path('users/', include('apps.workers_management.urls')),
     path('', include('apps.frontend.urls', namespace="front")),
     path('back/', include('apps.backend.urls', namespace="back")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] 
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

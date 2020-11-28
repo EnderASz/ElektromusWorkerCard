@@ -124,7 +124,7 @@ def overview_download_view(request):
         filename = f"{str_from_date} - {str_to_date}.xlsx"
 
         users = request.POST.get('users').split(',')
-        users = [User.objects.get(id=user) for user in users]
+        users = [User.objects.get(id=user) for user in users if user]
 
         response = HttpResponse(
             funcs.get_xlsx(users, from_date, to_date),
