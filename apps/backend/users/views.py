@@ -12,7 +12,6 @@ from . import functions as funcs
 
 import datetime
 
-
 def start_work_view(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -121,8 +120,6 @@ def overview_download_view(request):
     if request.method == 'POST' and request.user.is_authenticated:
         from_date = datetime.datetime.strptime(request.POST.get('date_from'), '%Y-%m-%d')
         to_date = datetime.datetime.strptime(request.POST.get('date_to'), '%Y-%m-%d')
-        from_date = timezone.localtime(from_date)
-        to_date = timezone.localtime(to_date)
         str_from_date = from_date.strftime("%d-%m-%Y")
         str_to_date = to_date.strftime("%d-%m-%Y")
         filename = f"{str_from_date} - {str_to_date}.xlsx"
