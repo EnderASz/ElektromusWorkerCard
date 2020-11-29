@@ -125,45 +125,25 @@ def get_xlsx(users, start_date, end_date):
                 'align': 'center',
                 'right': border_styles['dash'],
                 'bottom': border_styles['continue']}),
-            'data': {
-                'standard': workbook.add_format({
-                    'bg_color': '#DDDDDD',
-                    'align': 'center',
-                    'num_format': 'hh:mm',
-                    'left': border_styles['continue'],
-                    'right': border_styles['dash'],
-                    'bottom': border_styles['dash_dot']}),
-                'bottom': workbook.add_format({
-                    'bg_color': '#DDDDDD',
-                    'align': 'center',
-                    'num_format': 'hh:mm',
-                    'right': border_styles['continue'],
-                    'bottom': border_styles['bold_continue']})}},
+            'data': workbook.add_format({
+                'bg_color': '#DDDDDD',
+                'align': 'center',
+                'num_format': 'hh:mm',
+                'left': border_styles['continue'],
+                'right': border_styles['dash'],
+                'bottom': border_styles['dash_dot']})},
         'time_to': {
-            'title': {
-                'standard': workbook.add_format({
-                    'bg_color': '#CCCCCC',
-                    'align': 'center',
-                    'right': border_styles['continue'],
-                    'bottom': border_styles['continue']}),
-                'last': workbook.add_format({
-                    'bg_color': '#CCCCCC',
-                    'align': 'center',
-                    'right': border_styles['bold_continue'],
-                    'bottom': border_styles['continue']})},
-            'data': {
-                'standard': workbook.add_format({
+            'title': workbook.add_format({
+                'bg_color': '#CCCCCC',
+                'align': 'center',
+                'right': border_styles['continue'],
+                'bottom': border_styles['continue']}),
+            'data': workbook.add_format({
                     'bg_color': '#CCCCCC',
                     'align': 'center',
                     'num_format': 'hh:mm',
                     'right': border_styles['dash'],
-                    'bottom': border_styles['dash_dot']}),
-                'bottom': workbook.add_format({
-                    'bg_color': '#CCCCCC',
-                    'align': 'center',
-                    'num_format': 'hh:mm',
-                    'right': border_styles['continue'],
-                    'bottom': border_styles['bold_continue']})}},
+                    'bottom': border_styles['dash_dot']})},
         'additional_time' : {
             'title': {
                 'standard': workbook.add_format({
@@ -188,8 +168,7 @@ def get_xlsx(users, start_date, end_date):
                     'align': 'center',
                     'num_format': 'hh:mm',
                     'right': border_styles['continue'],
-                    'bottom': border_styles['bold_continue']})}
-        },
+                    'bottom': border_styles['bold_continue']})}},
         'localization': {
             'standard': workbook.add_format({
                     'bg_color': '#FFFFFF',
@@ -200,8 +179,7 @@ def get_xlsx(users, start_date, end_date):
                     'bg_color': '#FFFFFF',
                     'align': 'center',
                     'right': border_styles['continue'],
-                    'bottom': border_styles['bold_continue']})
-        },
+                    'bottom': border_styles['bold_continue']})},
         'worker': {
             'standard': workbook.add_format({
                 'valign': 'vcenter',
@@ -229,9 +207,7 @@ def get_xlsx(users, start_date, end_date):
                 'valign': 'vcenter',
                 'left': border_styles['bold_continue'],
                 'right': border_styles['continue'],
-                'bottom': border_styles['bold_continue']
-            })
-        },
+                'bottom': border_styles['bold_continue']})},
         'salary': {
             'standard': workbook.add_format({
                 'num_format': '#,##0.00"zł"',
@@ -247,9 +223,8 @@ def get_xlsx(users, start_date, end_date):
                 'valign': 'vcenter',
                 'left': border_styles['bold_continue'],
                 'right': border_styles['bold_continue'],
-                'bottom': border_styles['bold_continue']
-            }),
-        }}
+                'bottom': border_styles['bold_continue']})}
+        }
     
     users_amount = len(users) if isinstance(users, list) else users.count()
     days = list(date_range(start_date, end_date, True))
@@ -307,7 +282,7 @@ def get_xlsx(users, start_date, end_date):
         worksheet.write(
             3, col[1],
             "Do",
-            field_formats['time_to']['title']['standard'])
+            field_formats['time_to']['title'])
         worksheet.write(
             3, col[2],
             "Dodt.",
@@ -376,11 +351,11 @@ def get_xlsx(users, start_date, end_date):
             worksheet.write(
                 first_row, col[0],
                 time_from,
-                field_formats['time_from']['data']['standard'])
+                field_formats['time_from']['data'])
             worksheet.write(
                 first_row, col[1],
                 time_to,
-                field_formats['time_to']['data']['standard'])
+                field_formats['time_to']['data'])
             worksheet.write(
                 first_row, col[2],
                 additional_time,
