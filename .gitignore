@@ -108,3 +108,6 @@ media/
 *.pid
 
 CACHE/
+
+# Django Migrations
+**/migrations/
