@@ -27,8 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "ski*z@7)6tue=a83g263d(8@$ksqkh
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') != "False"
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'elektromuswc.pythonanywhere.com'
+    os.environ.get('HOST_NAME', '127.0.0.1')
 ]
 
 # Static files (CSS, JavaScript, Images)
