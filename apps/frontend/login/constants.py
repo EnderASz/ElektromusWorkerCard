@@ -4,5 +4,6 @@ ERRORS = {
     'WORKER_WORKED_TODAY_ALREADY_ERROR': "Wprowadzony pracownik, w dniu dzisiejszym już rozpoczął oraz zakończył cykl pracy.",
     'NOT_LOGGED_ERROR': "Nie jesteś zalogowany. Proszę się zalogować, aby kontynuować działania.",
     'NOT_PERSONEL_ERROR': "Twoje konto nie należy do listy pracowników. Skontaktuj się z administratorem w celu skorygowania ewentualnej nieprawidłowości.",
-    'NOT_ADMIN_ERROR': "Nie jesteś"
+    'NOT_ADMIN_ERROR': "Nie posiadasz uprawnień administracyjnych pozwalających na dostęp do wybranej strony.",
+    'SESSION_EXPIRED': "Sesja naprawdopodobniej wygasła. Aby rozpocząć sesję od nowa proszę się zalogować."
 }

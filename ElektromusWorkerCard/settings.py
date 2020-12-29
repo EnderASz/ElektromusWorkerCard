@@ -28,7 +28,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') != "False"
 
 ALLOWED_HOSTS = [
     os.environ.get('HOST_NAME', '127.0.0.1')
-]
+] + ['.ngrok.io'] #ignoreline
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

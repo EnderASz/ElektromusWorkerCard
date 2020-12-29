@@ -1,5 +1,7 @@
 {% load static %}
 {% load compress %}
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
 <head>
     {% include 'apps/global/html/global_head.html' %}
     {% compress css %}
@@ -21,16 +23,16 @@
             action="{% url action.url %}"
             method="post">
                 {% csrf_token %}
-                <input type=hidden id="action" name="action" value="{{action.name}}">            
+                <input type=hidden id="action" name="action_name" value="{{action.name}}">            
                 {% if action.name == "add_work_time" %}
                     <ul>
                         <li>
                             <label>Czas rozpoczęcia pracy:</label><br>
-                            <input type=datetime-local id='work-start' value="{{work.start}}" readonly>
+                            <input type=datetime id='work-start' value="{{work.start|timezone:TIME_ZONE|date:'Y-m-d H:i'}}" readonly>
                         </li>
                         <li>
                             <label>Czas zakończenia pracy:</label><br>
-                            <input type=datetime-local id='work-finish' value="{{work.finish}}" readonly>
+                            <input type=datetime id='work-finish' value="{{work.finish|timezone:TIME_ZONE|date:'Y-m-d H:i'}}" readonly>
                         </li>
                         <li>
                             <label>Miejsce pracy:</label></br>
@@ -61,11 +63,15 @@
                     <ul>
                         <li>
                             <label>Czas rozpoczęcia pracy:</label><br>
-                            <input type=datetime-local id='work-start' value="{{work.start}}" readonly>
+                            <input type=datetime id='work-start' value="{{work.start|timezone:TIME_ZONE|date:'Y-m-d H:i'}}" readonly>
                         </li>
                         <li>
                             <label>Miejsce pracy:</label></br>
                             <input type=text id='work-location' value="{{work.location}}" readonly>
+                        </li>
+                        <li>
+                            <label>Czas zakończenia pracy:</label><br>
+                            <input type=datetime-local name='work_finish' id='work-finish' value="{% now 'Y-m-d' %}T{% now 'H:i' %}">
                         </li>
                     </ul>
                     <footer>
@@ -75,4 +81,5 @@
         </form>
     </main>
     <script type="text/javascript" src="{% static 'apps/work_form/js/confirm.js' %}"></script>
+    {% include 'apps/global/html/global_body_end.html' %}
 </body>

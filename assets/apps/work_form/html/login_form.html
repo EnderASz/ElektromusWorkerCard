@@ -31,6 +31,8 @@
             Pracownik nie jest zalogowany!
             {% elif error.name == 'NOT_PERSONEL_ERROR' %}
             Błąd konfiguracji konta!
+            {% elif error.name == 'SESSION_EXPIRED' %}
+            Sesja wygasła!
             {% endif %}
         </h5>
         <p>{{error.description}}</p>
@@ -44,4 +46,5 @@
             <input type=submit id="submit-bt" class="confirm large" value="Dalej">
         </form>
     </main>
+    {% include 'apps/global/html/global_body_end.html' %}
 </body>

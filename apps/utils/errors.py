@@ -1,3 +1,4 @@
+from django.core.exceptions import RequestDataTooBig
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 
@@ -10,7 +11,7 @@ class AuthError:
     @staticmethod
     def not_logged(request):
         request.session['error'] = 'NOT_LOGGED_ERROR'
-        return redirect('front:login:login')
+        return redirect('front:router:main')
 
     @staticmethod
     def not_personel(request):
@@ -21,4 +22,9 @@ class AuthError:
     @staticmethod
     def not_admin(request):
         request.session['error'] = "NOT_ADMIN_ERROR"
+        return redirect('front:router:main')
+
+    @staticmethod
+    def session_expired(request):
+        request.session['error'] = "SESSION_EXPIRED"
         return redirect('front:router:main')

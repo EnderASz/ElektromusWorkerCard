@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, tzinfo
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -38,9 +38,9 @@ def finish_work_panel(request):
         worker = Worker.objects.filter(user = request.user).first()
         if not worker:
             return AuthError.not_personel(request)
-        today_work = funcs.get_work(worker, timezone.localdate())
+        current_work = funcs.get_work(worker, timezone.localdate())
         if not worker.working:
-            if not today_work[0]:
+            if not current_work:
                 return redirect(worker_routes['start_work_panel'])
             return redirect(worker_routes['add_work_time_panel'])
         return render(
@@ -53,8 +53,8 @@ def finish_work_panel(request):
                     'url': 'back:users:finish_work'
                 },
                 'work': {
-                    'start': today_work[0].timestamp.strftime("%Y-%m-%dT%H:%M"),
-                    'location': today_work[0].location
+                    'start': current_work[0].timestamp,
+                    'location': current_work[0].location
                 },
                 'logged_user': request.user
             })
@@ -85,8 +85,8 @@ def add_work_time_panel(request):
                         'url': 'back:users:add_work_time'
                     },
                     'work': {
-                        'start': today_work[0].timestamp.strftime("%Y-%m-%dT%H:%M"),
-                        'finish': today_work[1].timestamp.strftime("%Y-%m-%dT%H:%M"),
+                        'start': today_work[0].timestamp,
+                        'finish': today_work[1].timestamp,
                         'location': today_work[0].location,
                         'additional_time': f'{str(additional_time//60).zfill(2)}:{str(additional_time%60).zfill(2)}'
                     },

@@ -4,11 +4,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.core.exceptions import PermissionDenied
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 
 from apps.frontend.router.routes import router_routes
 
 from .models import Worker, WorkTimestamp, AdditionalWorkTime
 from . import functions as funcs
+from apps.utils.errors import AuthError
 
 import datetime
 
@@ -33,7 +35,7 @@ def start_work_view(request):
                     if request.user.is_staff or request.user.is_superuser:
                         return redirect(router_routes['cs_admin'])
                     return redirect('back:auth:logout')
-                return HttpResponseForbidden
+                return AuthError.session_expired(request)
             raise PermissionDenied
         raise PermissionDenied
     return HttpResponseBadRequest
@@ -47,13 +49,14 @@ def finish_work_view(request):
                     worker.working = False
                     timestamp = WorkTimestamp.objects.create(
                         user = request.user,
-                        working_after = False)
+                        working_after = False,
+                        timestamp=parse_datetime(request.POST.get('work_finish')))
                     timestamp.save()
                     worker.save()
                     if request.user.is_staff or request.user.is_superuser:
                         return redirect(router_routes['cs_admin'])
                     return redirect('back:auth:logout')
-                return HttpResponseForbidden
+                return AuthError.session_expired(request)
             raise PermissionDenied
         raise PermissionDenied
     return HttpResponseBadRequest
@@ -75,7 +78,7 @@ def add_work_time_view(request):
                     if request.user.is_staff or request.user.is_superuser:
                         return redirect(router_routes['cs_admin'])
                     return redirect('back:auth:logout')
-                return HttpResponseForbidden
+                return AuthError.session_expired(request)
             raise PermissionDenied
         raise PermissionDenied
     return HttpResponseBadRequest

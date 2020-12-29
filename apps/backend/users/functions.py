@@ -1,10 +1,12 @@
 import xlsxwriter
 import io
+import pytz
 from decimal import Decimal
 
 from .models import WorkTimestamp, Worker, AdditionalWorkTime
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.conf import settings
 
 def add_work_time(worker: Worker, minutes: int, date=timezone.localdate()):
     current = AdditionalWorkTime.objects.filter(
@@ -324,13 +326,15 @@ def get_xlsx(users, start_date, end_date):
             print(day)
             if work_start:
                 localization = work_start.location
-                time_from = work_start.timestamp.strftime('%H:%M')
+                time_from = work_start.timestamp.astimezone(
+                    pytz.timezone(settings.TIME_ZONE)).strftime('%H:%M')
                 work_end = WorkTimestamp.objects.filter(
                     user=user,
                     timestamp__gt=work_start.timestamp,
                     working_after=False).order_by('timestamp').first()
                 if work_end:
-                    time_to = work_end.timestamp.strftime('%H:%M')
+                    time_to = work_end.timestamp.astimezone(
+                        pytz.timezone(settings.TIME_ZONE)).strftime('%H:%M')
                     work_time_minutes += (work_end.timestamp - work_start.timestamp).seconds//60
                 else:
                     time_to = "--:--"
