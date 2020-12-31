@@ -10,7 +10,7 @@ from apps.frontend.router.routes import router_routes
 
 from .models import Worker, WorkTimestamp, AdditionalWorkTime
 from . import functions as funcs
-from apps.utils.errors import AuthError
+from apps.utils.errors import AuthError, UserUpdateError
 
 import datetime
 
@@ -85,6 +85,8 @@ def add_work_time_view(request):
 
 def updateUserInfo(request):
     if request.method == "POST":
+        if not request.POST.get('username'):
+            return UserUpdateError.blank_username(request)
         result = funcs.update_user(
             request.user,
             request.POST)

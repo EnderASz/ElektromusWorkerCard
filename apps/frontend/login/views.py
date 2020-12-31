@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from . import constants as consts
+from apps.utils import constants as consts
 
 # Create your views here.
 def login_panel(request):
@@ -12,15 +12,9 @@ def login_panel(request):
         'default_username': request.session.get('username', ""),
         'error': {'name': error, 'description': consts.ERRORS[error]} if error else None
     }
-    
     if error:
-        context.update({
-            'error': {
-                'name': error,
-                'description': consts.ERRORS[error]
-            }
-        })
         del request.session['error']
+        
     return render(
         request,
         'apps/work_form/html/login_form.html',

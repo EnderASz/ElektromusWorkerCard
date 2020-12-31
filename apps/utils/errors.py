@@ -28,3 +28,14 @@ class AuthError:
     def session_expired(request):
         request.session['error'] = "SESSION_EXPIRED"
         return redirect('front:router:main')
+
+
+class UserUpdateError:
+    def __new__(cls, request):
+        request.session['error'] = "UNKNOWS_USER_UPDATE_ERROR"
+        return redirect('front:router:main')
+
+    @staticmethod
+    def blank_username(request):
+        request.session['error'] = "BLANK_USERNAME_ERROR"
+        return redirect('front:router:main')

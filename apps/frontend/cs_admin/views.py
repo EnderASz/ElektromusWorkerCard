@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils import timezone
 
 from apps.backend.users.models import Worker
+from apps.utils import constants as consts
 
 # Create your views here.
 def main(request):
@@ -23,12 +24,17 @@ def user_list(request):
                 'user_info': user,
                 'working': working
             })
+        error = request.session.get('error')
         context = {
             'title': "Panel Administratora",
             'logged_user': request.user,
             'active': 'user_list',
-            'users': users
+            'users': users,
+            'error': {'name': error, 'description': consts.ERRORS[error]} if error else None
         }
+        
+        if error:
+            del request.session['error']
         return render(
             request,
             'apps/main_management/html/main.html',

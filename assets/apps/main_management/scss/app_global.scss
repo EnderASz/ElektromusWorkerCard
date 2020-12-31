@@ -1,8 +1,13 @@
 $blue-active: #1b6897;
 $blue-hover: #1c77af;
 
+body {
+    & > section, & > main {
+        width: 80%;
+    }
+}
+
 main {
-    width: 80%;
     &.active-manage_user, &.active-add_user {
         max-width: 41em;
     }

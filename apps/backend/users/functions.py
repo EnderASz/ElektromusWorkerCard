@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 import xlsxwriter
 import io
 import pytz
@@ -32,19 +33,20 @@ def delete_user(user: User):
 
 def create_user(auth_user, user_info):
     if auth_user.is_staff:
+        username = user_info.get('username')
         user = User.objects.create_user(
             user_info.get('username'),
             None,
             user_info.get('password'))
-        user.is_staff = auth_user.is_superuser and user_info.get('is_admin')
+        user.is_staff = bool(auth_user.is_superuser and user_info.get('is_admin'))
+        user.save()
         if user_info.get('is_worker'):
             rate = float(user_info.get('rate'))
-            worker = Worker.objects.create(user=user, rate_per_hour=rate)
+            Worker.objects.create(user=user, rate_per_hour=rate)
 
 def update_user(auth_user, user_new_info):
     if auth_user.is_staff:
         user_id = user_new_info.get('id')
-
         if(user_id != ""):
             forced_work_end = False
             user = User.objects.get(id=user_id)

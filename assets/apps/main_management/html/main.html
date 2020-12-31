@@ -13,6 +13,14 @@
     <header>
         <h1>ELEKTROMUS</h1>
     </header>
+    <section id="error-box" class="container {% if not error%}invisible{% endif %}">
+        <h5>
+            {% if error.name == 'BLANK_USERNAME_ERROR' %}
+            Nie podano nazwy użytkownika!
+            {% endif %}
+        </h5>
+        <p>{{error.description}}</p>
+    </section>
     <main class="container {% if active == "add_user" or active == "manage_user" or active == "change_password" %}narrow{% endif %}">
         {% include 'apps/global/html/global_main_header.html' %}
         {% include 'apps/main_management/html/nav.html' %}
