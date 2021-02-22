@@ -41,7 +41,7 @@
         {% include 'apps/global/html/global_main_header.html' %}
         <form action="{% url 'back:auth:login' %}" method="post">
             {% csrf_token %}
-            <input name='username' placeholder="Nazwa pracownika" type="text" value={{default_username}}>
+            <input name='username' placeholder="Nazwa pracownika" type="text" value="{{default_username}}">
             <input name='password' placeholder="Kod identyfikacyjny" type="password">
             <input type=submit id="submit-bt" class="confirm large" value="Dalej">
         </form>
