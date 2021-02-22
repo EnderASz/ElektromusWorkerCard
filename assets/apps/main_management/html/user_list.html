@@ -70,33 +70,50 @@
                             {% endspaceless %}
                         </td>
                         <td class="actions-column">
-                            <input
-                                class="manage_bt"
-                                type="button"
-                                value="Zarządaj"
-                                onclick="runAction(
-                                    'manage',
-                                    '{% url 'front:cs_admin:manage_user' pk=user.user_info.id %}',
-                                    '{{user.user_info.username}}',
-                                    '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
-                            <input
-                                class="delete_bt"
-                                type="button"
-                                value="Usuń"
-                                onclick="runAction(
-                                    'delete',
-                                    '{% url 'back:users:delete_user_view' pk=user.user_info.id %}',
-                                    '{{user.user_info.username}}',
-                                    '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
-                            <input
-                                class="change_password_bt"
-                                type="button"
-                                value="Zmień Hasło"
-                                onclick="runAction(
-                                    'change_password',
-                                    '{% url 'front:cs_admin:change_password' pk=user.user_info.id %}',
-                                    '{{user.user_info.username}}',
-                                    '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
+                            <ul class="action-list">
+                                <li>
+                                    <input
+                                        class="manage_bt"
+                                        id="edit"
+                                        type="image"
+                                        src="{% static 'apps/main_management/graphics/edit-icon.svg' %}"
+                                        alt="Edytuj"
+                                        title="Edytuj"
+                                        onclick="runAction(
+                                            'manage',
+                                            '{% url 'front:cs_admin:manage_user' pk=user.user_info.id %}',
+                                            '{{user.user_info.username}}',
+                                            '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
+                                </li>
+                                <li>
+                                    <input
+                                        class="delete_bt"
+                                        id="delete"
+                                        type="image"
+                                        src="{% static 'apps/main_management/graphics/bin-icon.svg' %}"
+                                        alt="Usuń"
+                                        title="Usuń"
+                                        onclick="runAction(
+                                            'delete',
+                                            '{% url 'back:users:delete_user_view' pk=user.user_info.id %}',
+                                            '{{user.user_info.username}}',
+                                            '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
+                                </li>
+                                <li>
+                                    <input
+                                        class="change_password_bt"
+                                        id="change_password"
+                                        type="image"
+                                        src="{% static 'apps/main_management/graphics/password-icon.svg' %}"
+                                        alt="Zmień hasło"
+                                        title="Zmień hasło"
+                                        onclick="runAction(
+                                            'change_password',
+                                            '{% url 'front:cs_admin:change_password' pk=user.user_info.id %}',
+                                            '{{user.user_info.username}}',
+                                            '{% if user.user_info.is_superuser %}superuser{% elif user.user_info.is_staff %}admin{% elif user.working != None %}worker{% else %}user{% endif %}');">
+                                </li>
+                            </ul>
                         </td>
                     </tr>
                 {% endfor %}

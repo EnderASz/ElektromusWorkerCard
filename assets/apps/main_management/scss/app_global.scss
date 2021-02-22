@@ -67,18 +67,21 @@ main {
             margin-right: 0.3%;
             &>form{
                 width: 100%;
-            }
-            #action-selection {
-                text-align: left;
-                margin-bottom: 1em;
-                & > select {
-                    width: 60%;
-                    font-size: 1em;
-                    font-family: "Roboto";
+                #action-selection {
+                    text-align: left;
+                    margin-bottom: 1em;
+                    & > select {
+                        width: 60%;
+                        font-size: 1em;
+                        font-family: "Roboto";
+                    }
+                    & > label {
+                        font-size: 1em;
+                        font-family: "Roboto";
+                    }
                 }
-                & > label {
-                    font-size: 1em;
-                    font-family: "Roboto";
+                table {
+                    width: 100%;
                 }
             }
         }
@@ -151,19 +154,43 @@ table {
         &:not(.checkbox-column) {
             padding: 0.4em 0.5em;
         }
+        &.checkbox-column {
+            width: 1em;
+        }
         &.username-column {
-            width: 60%;
             text-align: left;
         }
         &.worker-state-column {
-            width: 18%;
+            width: 9em;
         }
         &.user-type-column {
-            width: 11%;
+            width: 4em;
         }
-        &.actions-column a {
-            display: block;
+        &.actions-column {
             text-decoration: none;
+            width: calc((2*0.1em + 1.8em + 2*0.4em)*2 + 0.4em*2);
+            padding: 0.4em calc(0.5em - 0.1em);
+            ul {
+                margin: 0;
+                li {
+                    display: inline-block;
+                    input[type=image] {
+                        display: inline-block;
+                        height: calc(1.8em + 2*0.4em);
+                        background-color: #1f94db;
+                        padding: 0.4em;
+                        border-radius: 4px;
+                        margin: 0.1em;
+                        &:hover {
+                            background-color: #1c77af;
+                        }
+                        &:focus {
+                            background-color: #1b6897;
+                            outline: none;
+                        }
+                    }
+                }
+            }
         }
     }
 }
